@@ -150,8 +150,15 @@ public class MyViewModel {
 	}
 
 	@Command @NotifyChange({"invoiceNo","total"})
-	public void saveInvoice() {
+	public void saveInvoice() throws Exception{
 		try {
+			
+			if(invoiceListModel.size()==0){
+				throw new Exception("Please Add Invoice Items First");
+			}
+			if(transDate==null){
+				throw new Exception("Please Set Transaction Date Fist");
+			}
 
 			Invoice invoice = new Invoice();
 			invoice.setInvoiceNo(invoiceNo);
