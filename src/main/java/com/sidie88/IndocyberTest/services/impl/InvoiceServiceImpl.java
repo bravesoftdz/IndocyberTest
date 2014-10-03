@@ -34,4 +34,10 @@ public class InvoiceServiceImpl implements InvoiceService {
 		
 	}
 
+	@Override
+	public int getCountInvoice() {
+		int size = invoiceDao.queryAll().size();
+		return size;
+	}
+
 }
