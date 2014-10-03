@@ -1,0 +1,138 @@
+<zk>
+
+	<window apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm')@init('com.sidie88.IndocyberTest.MyViewModel')"
+		validationMessages="@id('vmsgs')" width="1000px" vflex="1"
+		title="Point of Sales" contentStyle="overflow:auto" border="normal" position="center" mode="overlapped">
+		<vlayout style="overflow:auto;">
+			`
+
+			<hbox align="center" hflex="1">
+				Search:
+				<textbox value="@save(vm.searchBox)"
+					onOK="@command('searchProduct')" hflex="1"
+					placeholder="Search Using Product Name" />
+				<button label="Search"
+					onClick="@command('searchProduct')" />
+			</hbox>
+
+			<listbox model="@bind(vm.productListModel)" rows="5" mold="paging" pageSize="5">
+				<listhead>
+					<listheader label="Id" hflex="min" />
+					<listheader label="Product" hflex="max" />
+					<listheader label="Price" hflex="min" />
+					<listheader label="Stock" hflex="min" />
+					<listheader label="Action" hflex="min" />
+				</listhead>
+				<template name="model">
+					<listitem>
+						<listcell>
+							<label value="@bind(each.productId)" />
+						</listcell>
+						<listcell>
+							<label value="@bind(each.productName)" />
+						</listcell>
+						<listcell>
+							<label value="@bind(each.price)" />
+						</listcell>
+						<listcell>
+							<label value="@bind(each.stock)" />
+						</listcell>
+						<listcell>
+							<button label="Add to Cart"
+								onClick="@command('addToCart', p=each)" />
+						</listcell>
+					</listitem>
+				</template>
+			</listbox>
+
+			<grid>
+				<columns>
+
+					<column label="" />
+					<column label=""></column>
+
+				</columns>
+				<rows>
+
+					<row>
+						Invoice No:
+						<cell>
+							<textbox value="@bind(vm.invoiceNo)"
+								width="150px" tabindex="1" />
+						</cell>
+					</row>
+					<row>
+
+						Transaction Date:
+						<hbox align="center">
+							<datebox value="@bind(vm.transDate)"
+								format="dd/MM/yyyy hh:mm" width="150px" tabindex="2" />
+						</hbox>
+
+					</row>
+					<row>
+						<label value="Customer" width="150px" />
+						<hlayout>
+							<textbox value="@bind(vm.customer)"
+								width="150px" tabindex="3" />
+						</hlayout>
+					</row>
+
+				</rows>
+			</grid>
+			Invoice Details :
+			<listbox model="@bind(vm.invoiceListModel)" rows="5" mold="paging" pageSize="5">
+				<listhead>
+					<listheader label="Id" hflex="min" />
+					<listheader label="Product" hflex="min" />
+					<listheader label="Price" hflex="min" />
+					<listheader label="Qty" hflex="min" />
+					<listheader label="Sub Total" hflex="min" />
+					<listheader label="Action" hflex="min" />
+				</listhead>
+				<template name="model">
+					<listitem>
+						<listcell>
+							<label value="@bind(each.productId)" />
+						</listcell>
+						<listcell>
+							<label value="@bind(each.productName)" />
+						</listcell>
+						<listcell>
+							<label value="@bind(each.price)" />
+						</listcell>
+						<listcell>
+							<label value="@bind(each.quantity)" />
+						</listcell>
+						<listcell>
+							<label value="@bind(each.subTotal)" />
+						</listcell>
+						<listcell>
+							<button label="Remove"
+								onClick="@command('removeFromCart', inv=each)" />
+						</listcell>
+					</listitem>
+				</template>
+			</listbox>
+			<grid>
+				<columns>
+					<column />
+					<column />
+				</columns>
+				<rows>
+					<row>
+						<label value="Total" />
+						<label value="@bind(vm.total)" />
+					</row>
+					<row>
+						<button label="Save" onClick="@command('saveInvoice')" />
+					</row>
+
+				</rows>
+			</grid>
+
+
+		</vlayout>
+	</window>
+</zk>
